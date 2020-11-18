@@ -5,31 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   
-    <!--<link rel="stylesheet" href="./style.css" /> -->
         <title>Weather Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
  
   </head>
-  <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!--JQuery script-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> <!--Moment script-->
+  <body> 
+    
+   
     <!--Header-->
 
+    <div class = "container-fluid" id="mainContainer"> 
 
-    <!--Container 5 Day Forecast (get's pushed down with float object?)
-        5 boxes with header id's for day 1, day, 2, etc-->
-
-     <!--float right container? City, dynamic info -->
-     
-     <!--row then col 1- aside, search field,-->
-
-     <!--same row, new col 1- ol, last cities search for,-->
-
-       <!--col 1- ol, last cities search for,-->
+        <header class="jumbotron">
+            <h1 class="display-5 bg-dark text-center" style="color: white">Weather Dashboard</h1>
+          </header>
 
 
 
-    <script src="./script.js" ></script>
+        <div class="row"> 
+            <div class="col-4 float-left">
+
+                   
+              <form id="searchBox">
+
+                <!-- Label for Text Box -->
+                <label for="searchCity">Search</label>
+            
+                <!-- Text Input Box -->
+                <input type="text" id="searchCity"><br>
+            
+                <!-- Submit Button -->
+                <input id="searchbtn" type="submit" value="Search">
+              </form>
+              
+              
+
+                <!-- <div class="col" id="cities"> -->
+                    <div class="btn-group-vertical" style="width: 18rem" > <!--This won't work. Shoud only appear after search-->
+                        <button type="button" class="btn btn-secondary btn-lg btn-block text-left" id="searchOne">City 1</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="searchTwo">City 2</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="searchThree">City 3</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="searchFour">City 4</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="searchFive">City 5</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="searchSix">City 6</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="searchSeven">City 7</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="searchEight">City 8</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="searchNine">City 9</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="searchTen">City 10</button>
+                    </div>
+                    
+               
+            </div>
+      
+  
+            <div class="col-8 border border-light, border border-right-0" id="weatherBox">
+
+                    <div class="row" id="currentCityRow">
+                        <div class="col-2 text-left" id="currentCity">
+                            <h4 class="text-left mt-2, ml-2" id="currentCityName"></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+
+                            <!--Data for current day-->
+                            <ul class="list-group" id="currentCityData">
+                        
+                            </ul>
+                            
+                        </div>
+                    </div>
+
+
+                    <div class="row" id="5dayForcast">
+                        <h4 class="text-left mt-2, ml-2">5-Day Forecast:</h4>
+                        <div class="col">
+                            
+                            <div class="list-group" id="dayOne">
+                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                                  <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id="dayOneDate"></h5>
+                                    <img id="dayOneIcon"></img>
+                                    <small id="dayOneTemp">Temp: </small>
+                                    <small id="dayOneHumid">Humidity: </small>
+                                  </div>
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <div class="col">
+                             <div class="list-group" id="dayTwo">
+                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                                  <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" class="date"></h5>
+                                    <small>3 days ago</small>
+                                  </div>
+                                  <p class="mb-1">Donec id elt risu.</p>
+                                  <small>Donec id elit non mi porta.</small>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="list-group" id="dayThree">
+                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                                  <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" class="date"></h5>
+                                    <small>3 days ago</small>
+                                  </div>
+                                  <p class="mb-1">Donec id elt risu.</p>
+                                  <small>Donec id elit non mi porta.</small>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="list-group" id="dayFour">
+                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                                  <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" class="date"></h5>
+                                    <small>3 days ago</small>
+                                  </div>
+                                  <p class="mb-1">Donec id elt risu.</p>
+                                  <small>Donec id elit non mi porta.</small>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="list-group" id="dayFive">
+                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                                  <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" class="date"></h5>
+                                    <small>3 days ago</small>
+                                  </div>
+                                  <p class="mb-1">Donec id elt risu.</p>
+                                  <small>Donec id elit non mi porta.</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+
+    </div>
+    
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> <!--Moment script-->
+<script type="text/javascript"></script>
+<script src="./script.js" ></script>
 
 </body>
 </html>
