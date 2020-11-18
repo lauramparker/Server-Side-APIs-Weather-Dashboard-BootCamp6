@@ -10,10 +10,12 @@
 
 //API key
 var APIKey = "1b758f2281f1833aa291dff536f4b566"; //Current forecast APIKEY
+
+var fivedayAPIKey = "65af81772398c8021de436a5afa38da3"; //5 day forecast API Key
       
 var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchCity + "&appid=1b758f2281f1833aa291dff536f4b566";
 
-var fivedayqueryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + searchCity + "&cnt=5&appid=1b758f2281f1833aa291dff536f4b566";
+var fivedayqueryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + searchCity + "&cnt=5&appid=65af81772398c8021de436a5afa38da3";
     
 
 //FUNCTIONS
@@ -40,10 +42,10 @@ $(document).ready(function ()  {
                 method: "GET"
             })
             .then(function(response) {
-                console.log(response);
+             //   console.log(response);
                 $("#currentCityName").text(response.name); // displays the current searched city name
-                $("#currentCityName").append(moment().format('MM/DD/YYYY')); 
-                $("#currentCityName").append("<img src='" + response.icon  + "'>"); // ???ICON IMAGE
+                $("#currentCityName").append(moment.unix((response.dt)).format("MM/DD/YYYY"));
+                $("#currentCityName").append("<img src='" + response.weather.icon  + "'>" + "</br>"); // ???ICON IMAGE
                 $("#currentCityData").append("Temperature: " + response.main.temp + "</br>"); //make list item?
                 $("#currentCityData").append("Humidity: " + response.main.humidity + "</br>");
                 $("#currentCityData").append("Wind Speed: " + response.wind.speed + "MPH" + "</br>");
@@ -53,30 +55,22 @@ $(document).ready(function ()  {
                 });
 
      
-        
-    $.ajax({ //5 Day Forecast TBD - include in above document.ready
-                url:"https://api.openweathermap.org/data/2.5/forecast/daily?q=Boston&cnt=5&appid=1b758f2281f1833aa291dff536f4b566",
+      
+    $.ajax({ //5 Day Forecast
+                url:"https://api.openweathermap.org/data/2.5/forecast?q=Boston&appid=65af81772398c8021de436a5afa38da3",
                 method: "GET"
             })
             .then(function(response){
-                console.log(response); //should we store EACH list [] set in a response 1, 2, 3, 4, 5?
-                $().text((moment().format('MM/DD/YYYY')) + 1); //convert unix timestamp to day... var dateString = moment.unix(value).format("MM/DD/YYYY")
-                $("#dayOneIcon").html(response.name); //returns & displays the weather icon
-                $("#dayOneTemp").text("Temp: " + response.main.temp);
-                $("#dayOneHUmid").text("Humidity: " + response.main.humidity);
+                console.log(response); //need to loop over the list
+                $("#dayOneDate").append(moment.unix((response.list[6].dt)).format("MM/DD/YYYY") + "</br>");
+              //  $("#dayOneIcon").html("<img src='" + response.weather.icon  + "'>" + "</br>"); //returns & displays the weather icon
+                $("#dayOneDate").append("Temp: " + response.list[6].main.temp + "</br>");
+                $("#dayOneDate").append("Humidity: " + response.list[6].main.humidity + "</br>");
         
         
-        
-//             });
+                });
 
-
-
-       
-
-
-
-
-        
+   
 
 //     // append row & col for each: temperature, humidity, wind speed, UV index
 
