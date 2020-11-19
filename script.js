@@ -4,6 +4,8 @@
 
     var searchCity;
 
+    var UVIndex;
+
     var searchList=[]; //empty array for rendering searched for cities in left sidebar. event handler pushes values into aray
 
  
@@ -12,11 +14,14 @@
 var APIKey = "1b758f2281f1833aa291dff536f4b566"; //Current forecast APIKEY
 
 var fivedayAPIKey = "65af81772398c8021de436a5afa38da3"; //5 day forecast API Key
+
+var uvIndexAPIKey = "1f3df3f7624cfc5a7a0d585bce621279"
       
 var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchCity + "&appid=1b758f2281f1833aa291dff536f4b566";
 
 var fivedayqueryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + searchCity + "&cnt=5&appid=65af81772398c8021de436a5afa38da3";
     
+
 
 //FUNCTIONS
 function pastSearch() {
@@ -25,11 +30,8 @@ function pastSearch() {
 
     //render button to search button list
     $("#searchOne").prepend("<div>" + "<button class= btn btn-block, btn btn-outline-secondary >" + searchCity + "</button>" + "</div>");
-
-   
      
 };
-
 
 
 
@@ -73,6 +75,19 @@ function saveSearch() {
 
 // Part 2 - Create the dynamic elements for today's weather in the current search city
 
+//API Call for UV Index
+    $.ajax({
+        url: "https://api.openweathermap.org/data/2.5/uvi?q=Boston&appid=1b758f2281f1833aa291dff536f4b566",
+        method: "GET"
+    })
+    .then(function(response) {
+        UVIndex = response.value
+        console.log(UVIndex);
+    });
+
+
+
+//API Call for Current Day Forecast
     $.ajax({ //Current Day & City
                 url: "https://api.openweathermap.org/data/2.5/weather?q=Boston&units=imperial&appid=1b758f2281f1833aa291dff536f4b566",
                 method: "GET"
@@ -89,7 +104,9 @@ function saveSearch() {
                 $("#currentCityData").append("<div>" + "Temperature: " + response.main.temp + " F" + "</div>"); //make list item?
                 $("#currentCityData").append("</br>" + "<div>" + "Humidity: " + response.main.humidity + " %" + "</div>");
                 $("#currentCityData").append("</br>" + "<div>" + "Wind Speed: " + response.wind.speed + " MPH" + "</div>");
-                $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + response.main.temp + "</div>" + "</br>"); // ??? UV?
+                $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + UNIndex + "</div>" + "</br>"); // ??? UV?
+                
+               
         
         
                 });
@@ -106,7 +123,7 @@ function saveSearch() {
 
                 var fivedayiconURL = "https://openweathermap.org/img/wn/10d@2x.png";
                 
-                for (var i = 0; i < 5; i++) { //Need to increase every 24 hours, i+8?
+                for (var i = 0; i < 40; i+=8) { //Need to increase every 24 hours, i+=8?
 
                     var forecastCol = $("<col>");
                     var forecastList = $("<list-group>");
