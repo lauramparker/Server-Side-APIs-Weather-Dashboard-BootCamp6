@@ -48,9 +48,9 @@ $(document).ready(function ()  {
               // var iconURL = `"https://openweathermap.org/img/wn/"+${iconCode}+"@2x.png"`;
                var iconURL = "https://openweathermap.org/img/wn/10d@2x.png";
 
-                $("#currentCityName").text(response.name); // displays the current searched city name
-                $("#currentCityName").append(moment.unix((response.dt)).format("MM/DD/YYYY"));
-                $("#currentCityName").append("<img src=" + iconURL +">"+"</br>");
+                $("#currentCityName").append("<h4>" + response.name + "</h4>"); // displays the current searched city name
+                $("#currentCityRow").append("<h4>" + "  (" + moment.unix((response.dt)).format("MM/DD/YYYY") + ")" + "</h4>");
+                $("#currentCityRow").append("<img src=" + iconURL +">"+"</br>");
                 $("#currentCityData").append("<div>" + "Temperature: " + response.main.temp + " F" + "</div>"); //make list item?
                 $("#currentCityData").append("</br>" + "<div>" + "Humidity: " + response.main.humidity + "</div>");
                 $("#currentCityData").append("</br>" + "<div>" + "Wind Speed: " + response.wind.speed + " MPH" + "</div>");
@@ -72,8 +72,8 @@ $(document).ready(function ()  {
 
                 $("#dayOneDate").append(moment.unix((response.list[6].dt)).format("MM/DD/YYYY") + "</br>");
                 $("#dayOneDate").append("<img src=" + fivedayiconURL +">"+"</br>"); //returns & displays the weather icon
-                $("#dayOneDate").append("Temp: " + response.list[6].main.temp + "</br>");
-                $("#dayOneDate").append("Humidity: " + response.list[6].main.humidity + "</br>");
+                $("#dayOneDate").append("<small>" + "Temp: " + response.list[6].main.temp + "F" + "</small>" + "</br>");
+                $("#dayOneDate").append("</br>" + "<small>" + "Humidity: " + response.list[6].main.humidity + "</small>" + "</br>");
         
         
                 });
