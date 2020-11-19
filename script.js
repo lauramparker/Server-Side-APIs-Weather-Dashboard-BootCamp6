@@ -2,9 +2,9 @@
 
     var currentCity = $("#currentCity"); 
 
-    var currentDay;
+    var searchCity;
 
-    var searchCity; //empty array for rendering searched for cities in left sidebar. event handler pushes values into aray
+    var searchList=[]; //empty array for rendering searched for cities in left sidebar. event handler pushes values into aray
 
  
 
@@ -19,25 +19,34 @@ var fivedayqueryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=
     
 
 //FUNCTIONS
+function pastSearch() {
 
-function saveSearch () {
+    var searchCity= $("#searchCity").val().trim();
+
+    //render button to search button list
+    $("#searchOne").prepend("<div>" + "<button class= btn btn-block, btn btn-outline-secondary >" + searchCity + "</button>" + "</div>");
+
+   
+     
+};
+
+
+
+
+function saveSearch() {
     
     var searchCity= $("#searchCity").val().trim();
 
-    var searchList =
-    JSON.parse(window.localStorage.getItem("searchList")) || [];
-
-
-                    // format new score object for current user
-            var newSearch = [
-                 searchCity
-            ];
+    // format newSearch object
+        var newSearch = {searchCity: searchCity};
         
             // save to localstorage
-         //   (searchList).push(newSearch);
-            window.localStorage.setItem("searchList", JSON.stringify(newSearch));
-            console.log(searchList);
-
+        window.localStorage.setItem("searchList", JSON.stringify(newSearch));
+          
+          var searchList =
+          JSON.parse(window.localStorage.getItem("searchList"));
+          console.log(searchList);
+ 
            
 };
 
@@ -51,16 +60,12 @@ function saveSearch () {
         event.preventDefault();
 
             var searchCity= $("#searchCity").val().trim(); //reads the City Name that was entered to search
-         //   searchCity.push(searchCity);
-          //  console.log(searchCity);
-          //  searchCity.attr(data-search); //add data-attribute to log all previous searches
 
         //call saveSearch & renderButtons functions
-
             saveSearch(searchCity);
-  
+            pastSearch(searchCity);
           
-        });
+    });
 
 //}); //end of document ready function
 
