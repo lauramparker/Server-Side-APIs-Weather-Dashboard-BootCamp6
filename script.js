@@ -28,8 +28,8 @@ $(document).ready(function ()  {
            
             var searchCity= $("#searchCity").val().trim(); //reads the City Name that was entered to search
             console.log(searchCity);
-            searchCity.attr(data-search); //add data-attribute to log all previous searches
-            localStorage
+           // searchCity.attr(data-search); //add data-attribute to log all previous searches
+          
         });
 
 }); //end of document ready function
@@ -66,37 +66,34 @@ $(document).ready(function ()  {
                 method: "GET"
             })
             .then(function(response){
-                console.log(response); //need to loop over the list
+             //   console.log(response); //need to loop over the list
 
                 var fivedayiconURL = "https://openweathermap.org/img/wn/10d@2x.png";
+                
+                for (var i = 0; i < 5; i++) { //Need to increase every 24 hours, i+8?
 
-                $("#dayOneDate").append(moment.unix((response.list[6].dt)).format("MM/DD/YYYY") + "</br>");
-                $("#dayOneDate").append("<img src=" + fivedayiconURL +">"+"</br>"); //returns & displays the weather icon
-                $("#dayOneDate").append("<small>" + "Temp: " + response.list[6].main.temp + "F" + "</small>" + "</br>");
-                $("#dayOneDate").append("</br>" + "<small>" + "Humidity: " + response.list[6].main.humidity + "</small>" + "</br>");
+                    var forecastCol = $("<col>");
+                    var forecastList = $("<list-group>");
+                    forecastCol.addClass("mr-4");
+                    forecastList.addClass("list-group-item list-group-item-action flex-column align-items-start");
+                    forecastList.addClass("text-light bg-primary");
         
+
+                        forecastList.append("<h5>" + moment.unix((response.list[i].dt)).format("MM/DD/YYYY")+ "</h5>" + "</br>");
+                        forecastList.append("<img src=" + fivedayiconURL +">"+"</br>"); //returns & displays the weather icon
+                        forecastList.append("<small>" + "Temp: " + response.list[i].main.temp + " F" + "</small>" + "</br>");
+                        forecastList.append("<small>" + "Humidity: " + response.list[i].main.humidity + "</small>" + "</br>");
         
+                               
+                    //appending elements to DOM
+                    $("#fiveDayForecast").append(forecastCol);
+                    forecastCol.append(forecastList);
+                
+                   
+                    }
+
+
                 });
-
-   
-
-//     // append row & col for each: temperature, humidity, wind speed, UV index
-
-//     //2. 5-Day Forecast header
-//     // append current date + 1 day to #inoneday, etc
-
-//     $(".list-group").each(function() {
-       
-//         for (var i = 0; i < 6; i++) {
-//             var futureDate=(moment().format('MM/DD/YYYY') + i);
-            
-//             for (var i = 0; i < 6; i++) {
-//                 $(".date").text(futureDate);
-
-//             };
-//         };
-//     });
-
 
 
 
