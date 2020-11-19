@@ -29,6 +29,7 @@ $(document).ready(function ()  {
             var searchCity= $("#searchCity").val().trim(); //reads the City Name that was entered to search
             console.log(searchCity);
             searchCity.attr(data-search); //add data-attribute to log all previous searches
+            localStorage
         });
 
 }); //end of document ready function
@@ -38,18 +39,22 @@ $(document).ready(function ()  {
 // //Part 2 - Create the dynamic elements for today's weather in the current search city
 
     $.ajax({ //Current Day & City
-                url: "https://api.openweathermap.org/data/2.5/weather?q=Boston&appid=1b758f2281f1833aa291dff536f4b566",
+                url: "https://api.openweathermap.org/data/2.5/weather?q=Boston&units=imperial&appid=1b758f2281f1833aa291dff536f4b566",
                 method: "GET"
             })
             .then(function(response) {
-             //   console.log(response);
+                console.log(response);
+             //  var iconCode =  response.weather.icon; 
+              // var iconURL = `"https://openweathermap.org/img/wn/"+${iconCode}+"@2x.png"`;
+               var iconURL = "https://openweathermap.org/img/wn/10d@2x.png";
+
                 $("#currentCityName").text(response.name); // displays the current searched city name
                 $("#currentCityName").append(moment.unix((response.dt)).format("MM/DD/YYYY"));
-                $("#currentCityName").append("<img src='" + response.weather.icon  + "'>" + "</br>"); // ???ICON IMAGE
-                $("#currentCityData").append("Temperature: " + response.main.temp + "</br>"); //make list item?
-                $("#currentCityData").append("Humidity: " + response.main.humidity + "</br>");
-                $("#currentCityData").append("Wind Speed: " + response.wind.speed + "MPH" + "</br>");
-                $("#currentCityData").append("UV Index: " + response.main.temp + "</br>"); // ??? UV?
+                $("#currentCityName").append("<img src=" + iconURL +">"+"</br>");
+                $("#currentCityData").append("<div>" + "Temperature: " + response.main.temp + " F" + "</div>"); //make list item?
+                $("#currentCityData").append("</br>" + "<div>" + "Humidity: " + response.main.humidity + "</div>");
+                $("#currentCityData").append("</br>" + "<div>" + "Wind Speed: " + response.wind.speed + " MPH" + "</div>");
+                $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + response.main.temp + "</div>" + "</br>"); // ??? UV?
         
         
                 });
@@ -57,13 +62,16 @@ $(document).ready(function ()  {
      
       
     $.ajax({ //5 Day Forecast
-                url:"https://api.openweathermap.org/data/2.5/forecast?q=Boston&appid=65af81772398c8021de436a5afa38da3",
+                url:"https://api.openweathermap.org/data/2.5/forecast?q=Boston&units=imperial&appid=65af81772398c8021de436a5afa38da3",
                 method: "GET"
             })
             .then(function(response){
                 console.log(response); //need to loop over the list
+
+                var fivedayiconURL = "https://openweathermap.org/img/wn/10d@2x.png";
+
                 $("#dayOneDate").append(moment.unix((response.list[6].dt)).format("MM/DD/YYYY") + "</br>");
-              //  $("#dayOneIcon").html("<img src='" + response.weather.icon  + "'>" + "</br>"); //returns & displays the weather icon
+                $("#dayOneDate").append("<img src=" + fivedayiconURL +">"+"</br>"); //returns & displays the weather icon
                 $("#dayOneDate").append("Temp: " + response.list[6].main.temp + "</br>");
                 $("#dayOneDate").append("Humidity: " + response.list[6].main.humidity + "</br>");
         
@@ -91,7 +99,6 @@ $(document).ready(function ()  {
 
 
 
-    //Part 3 -Run the Ajax calls to OPenWeatherMap API and store the data
 
 
     
