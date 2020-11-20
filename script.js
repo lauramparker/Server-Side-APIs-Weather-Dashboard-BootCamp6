@@ -58,38 +58,26 @@ function saveSearch() {
     //function to read value of searchCity and call data after clicking search button
 //$(document).ready(function ()  { 
 
-    $("#searchbtn").on("click", function (event){
+
+
+$("#searchbtn").on("click", function (event){
         event.preventDefault();
 
             var searchCity= $("#searchCity").val().trim(); //reads the City Name that was entered to search
 
         //call saveSearch & renderButtons functions
-            saveSearch(searchCity);
-            pastSearch(searchCity);
-          
-    });
+
 
 //}); //end of document ready function
 
-
-
 // Part 2 - Create the dynamic elements for today's weather in the current search city
-
-//API Call for UV Index
-    $.ajax({
-        url: "https://api.openweathermap.org/data/2.5/uvi?q=Boston&appid=1b758f2281f1833aa291dff536f4b566",
-        method: "GET"
-    })
-    .then(function(response) {
-        UVIndex = response.value
-        console.log(UVIndex);
-    });
 
 
 
 //API Call for Current Day Forecast
     $.ajax({ //Current Day & City
-                url: "https://api.openweathermap.org/data/2.5/weather?q=Boston&units=imperial&appid=1b758f2281f1833aa291dff536f4b566",
+        
+            url: "https://api.openweathermap.org/data/2.5/weather?q=" + searchCity + "&units=imperial&appid=1b758f2281f1833aa291dff536f4b566",
                 method: "GET"
             })
             .then(function(response) {
@@ -104,18 +92,31 @@ function saveSearch() {
                 $("#currentCityData").append("<div>" + "Temperature: " + response.main.temp + " F" + "</div>"); //make list item?
                 $("#currentCityData").append("</br>" + "<div>" + "Humidity: " + response.main.humidity + " %" + "</div>");
                 $("#currentCityData").append("</br>" + "<div>" + "Wind Speed: " + response.wind.speed + " MPH" + "</div>");
-                $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + UNIndex + "</div>" + "</br>"); // ??? UV?
-                
                
-        
-        
+                
+                
                 });
+
+
+
+//API Call for UV Index
+    $.ajax({
+                url: "https://api.openweathermap.org/data/2.5/uvi?q="  + searchCity + "&appid=1b758f2281f1833aa291dff536f4b566",
+                method: "GET"
+            })
+            .then(function(response) {
+            
+                $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + response.value + "</div>" + "</br>"); 
+            });
+
+
+
 
 
 // Part 3 - Create the dynamic elements for 5 day weather forecast 
       
     $.ajax({ //5 Day Forecast
-                url:"https://api.openweathermap.org/data/2.5/forecast?q=Boston&units=imperial&appid=65af81772398c8021de436a5afa38da3",
+                url:"https://api.openweathermap.org/data/2.5/forecast?q" + searchCity + "=Boston&units=imperial&appid=65af81772398c8021de436a5afa38da3",
                 method: "GET"
             })
             .then(function(response){
@@ -149,7 +150,10 @@ function saveSearch() {
                 });
 
 
-
+    saveSearch(searchCity);
+    pastSearch(searchCity);
+              
+});
 
     
 
