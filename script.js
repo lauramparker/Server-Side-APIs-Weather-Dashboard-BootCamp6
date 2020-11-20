@@ -96,7 +96,7 @@ $("#searchbtn").on("click", function (event){
                 $("#currentCityName").append("<h4>" + response.name + "</h4>"); // displays the current searched city name
                 $("#currentCityRow").append("<h4>" + "  (" + moment.unix((response.dt)).format("MM/DD/YYYY") + ")" + "</h4>");
                 $("#currentCityRow").append("<img src=" + iconURL +">"+"</br>");
-                $("#currentCityData").append("<div>" + "Temperature: " + response.main.temp + " F" + "</div>"); //make list item?
+                $("#currentCityData").append("<div>" + "Temperature: " + response.main.temp + " °F" + "</div>"); //make list item?
                 $("#currentCityData").append("</br>" + "<div>" + "Humidity: " + response.main.humidity + " %" + "</div>");
                 $("#currentCityData").append("</br>" + "<div>" + "Wind Speed: " + response.wind.speed + " MPH" + "</div>");
                
@@ -161,7 +161,7 @@ $("#searchbtn").on("click", function (event){
 
                         forecastList.append("<h5>" + moment.unix((response.list[i].dt)).format("MM/DD/YYYY")+ "</h5>" + "</br>");
                         forecastList.append("<img src=" + fivedayiconURL +">"+"</br>"); //returns & displays the weather icon
-                        forecastList.append("<small>" + "Temp: " + response.list[i].main.temp + " F" + "</small>" + "</br>");
+                        forecastList.append("<small>" + "Temp: " + response.list[i].main.temp + " °F" + "</small>" + "</br>");
                         forecastList.append("<small>" + "Humidity: " + response.list[i].main.humidity + " %" + "</small>" + "</br>");
         
                                
