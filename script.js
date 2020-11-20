@@ -23,18 +23,24 @@ var fivedayqueryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=
     
 
 
+
+
 //FUNCTIONS
+
+
+
+//function to render button for serached city to search button list
 function pastSearch() {
 
     var searchCity= $("#searchCity").val().trim();
 
-    //render button to search button list
+  
     $("#searchOne").prepend("<div>" + "<button class= btn btn-block, btn btn-outline-secondary >" + searchCity + "</button>" + "</div>");
      
 };
 
 
-
+//function to save past data to local storage
 function saveSearch() {
     
     var searchCity= $("#searchCity").val().trim();
@@ -53,11 +59,12 @@ function saveSearch() {
 };
 
 
-//Part 1 - Create the search input field. Save and set text of previous cities searched
+//Part 1 - Create the search input field. 
 
-    //function to read value of searchCity and call data after clicking search button
-//$(document).ready(function ()  { 
 
+//function to read value of searchCity and call API data after clicking search button
+
+$(document).ready(function ()  { 
 
 
 $("#searchbtn").on("click", function (event){
@@ -65,10 +72,10 @@ $("#searchbtn").on("click", function (event){
 
             var searchCity= $("#searchCity").val().trim(); //reads the City Name that was entered to search
 
-        //call saveSearch & renderButtons functions
 
 
-//}); //end of document ready function
+
+
 
 // Part 2 - Create the dynamic elements for today's weather in the current search city
 
@@ -93,22 +100,25 @@ $("#searchbtn").on("click", function (event){
                 $("#currentCityData").append("</br>" + "<div>" + "Humidity: " + response.main.humidity + " %" + "</div>");
                 $("#currentCityData").append("</br>" + "<div>" + "Wind Speed: " + response.wind.speed + " MPH" + "</div>");
                
+                var cityLat = response.coord.lat;
+                var cityLon = response.coord.lat;
+                console.log (cityLat, cityLon);
+
+
+
+                        //Nested API Call for UV Index - 
+                        $.ajax({
+
+                            url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + cityLat + "&lon=" + cityLon + "&appid=1b758f2281f1833aa291dff536f4b566",
+                            method: "GET"
+                        })
+                        .then(function(response) {
                 
-                
-                });
+                            $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + response.value + "</div>" + "</br>"); 
+                        });
 
 
-
-//API Call for UV Index
-    $.ajax({
-                url: "https://api.openweathermap.org/data/2.5/uvi?q="  + searchCity + "&appid=1b758f2281f1833aa291dff536f4b566",
-                method: "GET"
-            })
-            .then(function(response) {
-            
-                $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + response.value + "</div>" + "</br>"); 
-            });
-
+                });// end first AJAX call and nested AJAX call
 
 
 
@@ -116,7 +126,7 @@ $("#searchbtn").on("click", function (event){
 // Part 3 - Create the dynamic elements for 5 day weather forecast 
       
     $.ajax({ //5 Day Forecast
-                url:"https://api.openweathermap.org/data/2.5/forecast?q" + searchCity + "=Boston&units=imperial&appid=65af81772398c8021de436a5afa38da3",
+                url:"https://api.openweathermap.org/data/2.5/forecast?q=" + searchCity + "&units=imperial&appid=65af81772398c8021de436a5afa38da3",
                 method: "GET"
             })
             .then(function(response){
@@ -124,7 +134,7 @@ $("#searchbtn").on("click", function (event){
 
                 var fivedayiconURL = "https://openweathermap.org/img/wn/10d@2x.png";
                 
-                for (var i = 0; i < 40; i+=8) { //Need to increase every 24 hours, i+=8?
+                for (var i = 0; i < 40; i+=8) { //Dated is stored in 3 hour increments. Need to increase every 24 hours, thus i+=8
 
                     var forecastCol = $("<col>");
                     var forecastList = $("<list-group>");
@@ -136,7 +146,7 @@ $("#searchbtn").on("click", function (event){
                         forecastList.append("<h5>" + moment.unix((response.list[i].dt)).format("MM/DD/YYYY")+ "</h5>" + "</br>");
                         forecastList.append("<img src=" + fivedayiconURL +">"+"</br>"); //returns & displays the weather icon
                         forecastList.append("<small>" + "Temp: " + response.list[i].main.temp + " F" + "</small>" + "</br>");
-                        forecastList.append("<small>" + "Humidity: " + response.list[i].main.humidity + "</small>" + "</br>");
+                        forecastList.append("<small>" + "Humidity: " + response.list[i].main.humidity + " %" + "</small>" + "</br>");
         
                                
                     //appending elements to DOM
@@ -144,16 +154,21 @@ $("#searchbtn").on("click", function (event){
                     forecastCol.append(forecastList);
                 
                    
-                    }
+                    };
 
 
                 });
 
 
+    //call saveSearch to store in local storage
     saveSearch(searchCity);
-    pastSearch(searchCity);
-              
-});
 
+    //call pastSearch functions to render city buttons 
+    pastSearch(searchCity);
+  
+              
+}); //end of click handler function containing 3 AJAX calls
+
+}); //end of document ready function
     
 
