@@ -113,8 +113,24 @@ $("#searchbtn").on("click", function (event){
                             method: "GET"
                         })
                         .then(function(response) {
-                
-                            $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + response.value + "</div>" + "</br>"); 
+                            
+                            
+                            var UVIndex = response.value
+                            
+                            if ((UVIndex >= 3) && (UVIndex <= 5)) { //If/Else statements to change indicator color for UV Index Badge
+                               
+                                $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + "<span class='badge badge-success'>" + UVIndex + "</span>" + "</div>" + "</br>"); 
+                            } 
+
+                                else if ((UVIndex >= 0) && (UVIndex <= 2)) {
+
+                                    $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + "<span class='badge badge-warning'>" + UVIndex + "</span>" + "</div>" + "</br>"); 
+                                }       
+                                    
+                                    else {
+
+                                        $("#currentCityData").append("</br>" + "<div>" + "UV Index: " + "<span class='badge badge-danger'>" + UVIndex + "</span>" + "</div>" + "</br>"); 
+                                    }
                         });
 
 
