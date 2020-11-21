@@ -41,7 +41,7 @@ function pastSearch() {
 
 
 //function to save past data to local storage
-function saveSearch() {
+function saveSearch(searchCity) {
     
     var searchCity= $("#searchCity").val().trim();
 
@@ -66,7 +66,6 @@ function saveSearch() {
 
 $(document).ready(function ()  { 
 
-
 $("#searchbtn").on("click", function (event){
         event.preventDefault();
 
@@ -74,12 +73,7 @@ $("#searchbtn").on("click", function (event){
 
 
 
-
-
-
 // Part 2 - Create the dynamic elements for today's weather in the current search city
-
-
 
 //API Call for Current Day Forecast
     $.ajax({ //Current Day & City
@@ -89,9 +83,11 @@ $("#searchbtn").on("click", function (event){
             })
             .then(function(response) {
                 console.log(response);
-             //  var iconCode =  response.weather.icon; 
-              // var iconURL = `"https://openweathermap.org/img/wn/"+${iconCode}+"@2x.png"`;
-               var iconURL = "https://openweathermap.org/img/wn/10d@2x.png";
+
+                var iconCode = response.weather[0].icon;
+                console.log(iconCode);
+           
+                var iconURL = "https://openweathermap.org/img/wn/" + iconCode +"@2x.png";
 
                 $("#currentCityName").append("<h4>" + response.name + "</h4>"); // displays the current searched city name
                 $("#currentCityRow").append("<h4>" + "  (" + moment.unix((response.dt)).format("MM/DD/YYYY") + ")" + "</h4>");
@@ -102,7 +98,7 @@ $("#searchbtn").on("click", function (event){
                
                 var cityLat = response.coord.lat;
                 var cityLon = response.coord.lat;
-                console.log (cityLat, cityLon);
+              //  console.log (cityLat, cityLon);
 
 
 
@@ -146,9 +142,9 @@ $("#searchbtn").on("click", function (event){
                 method: "GET"
             })
             .then(function(response){
-             //   console.log(response); //need to loop over the list
+              console.log(response); //need to loop over the list
 
-                var fivedayiconURL = "https://openweathermap.org/img/wn/10d@2x.png";
+               
                 
                 for (var i = 0; i < 40; i+=8) { //Dated is stored in 3 hour increments. Need to increase every 24 hours, thus i+=8
 
@@ -157,10 +153,17 @@ $("#searchbtn").on("click", function (event){
                     forecastCol.addClass("mr-4");
                     forecastList.addClass("list-group-item list-group-item-action flex-column align-items-start");
                     forecastList.addClass("text-light bg-primary");
-        
-
+                        //date
                         forecastList.append("<h5>" + moment.unix((response.list[i].dt)).format("MM/DD/YYYY")+ "</h5>" + "</br>");
+                        
+                        //weather icon
+                        var fivedayicon= response.list[i].weather[0].icon;
+                        console.log(fivedayicon);
+                        var fivedayiconURL = "https://openweathermap.org/img/wn/" + fivedayicon + "@2x.png";
+
                         forecastList.append("<img src=" + fivedayiconURL +">"+"</br>"); //returns & displays the weather icon
+                        
+                        //Temp & Humidity
                         forecastList.append("<small>" + "Temp: " + response.list[i].main.temp + " °F" + "</small>" + "</br>");
                         forecastList.append("<small>" + "Humidity: " + response.list[i].main.humidity + " %" + "</small>" + "</br>");
         
