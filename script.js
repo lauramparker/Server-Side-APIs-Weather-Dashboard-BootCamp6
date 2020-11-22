@@ -73,7 +73,7 @@ $("#searchbtn").on("click", function (event){
         event.preventDefault();
 
         //deleting the previous elements
-        $("#currentCityName").empty();
+      //  $("#currentCityName").empty();
         $("#currentCityRow").empty();
         $("#currentCityData").empty();
         $("#fiveDayForecast").empty();
