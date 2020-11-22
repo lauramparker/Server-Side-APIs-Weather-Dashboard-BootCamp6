@@ -29,13 +29,15 @@ var fivedayqueryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=
 
 
 
-//function to render button for serached city to search button list
+//function to render button for serached city to search button list. researches city on button
 function pastSearch() {
 
     var searchCity= $("#searchCity").val().trim();
 
   
-    $("#searchOne").prepend("<div>" + "<button class= btn btn-block, btn btn-outline-secondary >" + searchCity + "</button>" + "</div>");
+    var oldSearch = $("#searchOne").prepend("<div>" + "<button class= btn btn-block, btn btn-outline-secondary >" + searchCity + "</button>" + "</div>");
+    var recallSearch = oldSearch.val().trim();
+        console.log(recallSearch);
      
 };
 
@@ -64,10 +66,17 @@ function saveSearch(searchCity) {
 
 //function to read value of searchCity and call API data after clicking search button
 
+
 $(document).ready(function ()  { 
 
 $("#searchbtn").on("click", function (event){
         event.preventDefault();
+
+        //deleting the previous elements
+        $("#currentCityName").empty();
+        $("#currentCityRow").empty();
+        $("#currentCityData").empty();
+        $("#fiveDayForecast").empty();
 
             var searchCity= $("#searchCity").val().trim(); //reads the City Name that was entered to search
 
@@ -98,7 +107,7 @@ $("#searchbtn").on("click", function (event){
                
                 var cityLat = response.coord.lat;
                 var cityLon = response.coord.lat;
-              //  console.log (cityLat, cityLon);
+            
 
 
 
