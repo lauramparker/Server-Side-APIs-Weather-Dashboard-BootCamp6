@@ -73,7 +73,7 @@ $("#searchbtn").on("click", function (event){
         event.preventDefault();
 
         //deleting the previous elements
-        $("#currentCityName").empty();
+      //  $("#currentCityName").empty();
         $("#currentCityRow").empty();
         $("#currentCityData").empty();
         $("#fiveDayForecast").empty();
@@ -98,8 +98,8 @@ $("#searchbtn").on("click", function (event){
            
                 var iconURL = "https://openweathermap.org/img/wn/" + iconCode +"@2x.png";
 
-                $("#currentCityName").append("<h4>" + response.name + "</h4>"); // displays the current searched city name
-                $("#currentCityRow").append("<h4>" + "  (" + moment.unix((response.dt)).format("MM/DD/YYYY") + ")" + "</h4>");
+                $("#currentCityRow").append("<h4 class=ml-2>" + response.name + "</h4>"); // displays the current searched city name
+                $("#currentCityRow").append("<h4 class=ml-2>" + "(" + moment.unix((response.dt)).format("MM/DD/YYYY") + ")" + "</h4>");
                 $("#currentCityRow").append("<img src=" + iconURL +">"+"</br>");
                 $("#currentCityData").append("<div>" + "Temperature: " + response.main.temp + " °F" + "</div>"); //make list item?
                 $("#currentCityData").append("</br>" + "<div>" + "Humidity: " + response.main.humidity + " %" + "</div>");
